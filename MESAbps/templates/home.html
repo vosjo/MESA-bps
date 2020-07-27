@@ -1,0 +1,104 @@
+
+<html>
+<head>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160011552-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-160011552-1');
+    </script>
+
+   
+   {{ script | safe }}
+
+
+</head>
+<body>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <div style="display: block; padding-bottom: 20px">
+        <h1 style="display: inline;">MESA - bps</h1>
+    </div>
+
+    <div>
+    <form action="/" method="GET">
+        <label class="bk">Select input parameters:</label>
+    
+        <table>
+        <tr>
+        <th>
+            <label class="bk">M1 init:</label>
+        </th>
+        <th>
+            <input type="text" id="M1init" name="M1init">
+        </th>
+        </tr>
+        
+        <tr>
+        <th>
+            <label class="bk">q init:</label>
+        </th>
+        <th>
+            <input type="text" id="qinit" name="qinit">
+        </th>
+        </tr>
+        
+        <tr>
+        <th>
+            <label class="bk">P init:</label>
+        </th>
+        <th>
+            <input type="text" id="Pinit" name="Pinit">
+        </th>
+        </tr>
+        
+        <tr>
+        <th>
+            <label class="bk">[F/H] init:</label>
+        </th>
+        <th>
+            <input type="text" id="FeHinit" name="FeHinit">
+        </th>
+        </tr>
+        
+        </table>
+        
+        <button type="submit">Simulate</button>
+        
+    </form>
+    </div>
+    
+    <p>
+    Or upload a csv file with as columns 'M1_init', 'q_init', 'P_init', 'FeH_init'. Limited to 16 Mb and 10000 lines.
+    </p>
+    
+    <form action='/upload/' method=POST enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+
+    
+    <h2>Results</h2>
+    
+    {% if results %}
+    
+    {{ results | safe }}
+    
+    {% endif %}
+
+</body>
+</html>
