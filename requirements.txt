@@ -2,7 +2,7 @@ setuptools>=41.0.0
 Flask>=1.1.1
 git+https://github.com/vosjo/nnaps.git
 tensorflow-cpu
-pylab
+matplotlib
 pandas>=1.0.1
 gunicorn
 
