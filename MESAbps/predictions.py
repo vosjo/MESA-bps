@@ -42,12 +42,12 @@ def predict(dataframe):
     
     # make predictions for stable systems
     if len(ind_stable) > 0:
-        stable_results = stable_model.predict(df.loc[ind_stable])
+        stable_results = stable_model.predict(df.loc[ind_stable]).values
         results.loc[ind_stable, ['P_final', 'q_final', 'M1_final', 'product']] = stable_results
     
     # make predictions for CE systems
     if len(ind_ce) > 0:
-        ce_results = ce_model.predict(df.loc[ind_ce])
+        ce_results = ce_model.predict(df.loc[ind_ce]).values
         results.loc[ind_ce, ['P_final', 'q_final', 'M1_final', 'product']] = ce_results
     
     # mergers are ignored as they are not predictable
