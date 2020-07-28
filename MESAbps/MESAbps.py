@@ -14,9 +14,14 @@ try:
 except:
     import predictions
     
-UPLOAD_FOLDER = 'uploads'
-DOWNLOAD_FOLDER = 'downloads'
+UPLOAD_FOLDER = os.path.join('MESAbps','uploads')
+DOWNLOAD_FOLDER = os.path.join('MESAbps','downloads')
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
+
+if not os.path.isdir(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
+if not os.path.isdir(DOWNLOAD_FOLDER):
+    os.mkdir(DOWNLOAD_FOLDER)
 
 #Connect the app
 app = Flask(__name__, static_url_path='/static')
@@ -91,7 +96,7 @@ def download_and_remove(filename):
         os.remove(path)
 
     r = app.response_class(generate(), mimetype='text/csv')
-    r.headers.set('Content-Disposition', 'attachment', filename='data.csv')
+    r.headers.set('Content-Disposition', 'attachment', filename='bps_results.csv')
     return r
 
 
