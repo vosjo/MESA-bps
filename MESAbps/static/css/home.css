@@ -1,0 +1,27 @@
+
+h1 {
+    display: block;
+    color: blue;
+    text-align: center;
+    font-size: 50px;
+} 
+
+h2 {
+    display: block;
+    text-align: center;
+    font-size: larger;
+}
+
+.form-div-main {
+    text-align: center;
+}
+
+.form-div {
+    display: inline-block;
+    border: solid;
+    padding: 5px;
+}
+
+.result-div {
+    display: inline-block;
+}

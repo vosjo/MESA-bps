@@ -13,10 +13,7 @@
     gtag('config', 'UA-160011552-3');
     </script>
 
-
-   
-   {{ script | safe }}
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 
 </head>
 <body>
@@ -32,74 +29,91 @@
     {% endwith %}
 
     <div style="display: block; padding-bottom: 20px">
-        <h1 style="display: inline;">MESA - bps</h1>
-    </div>
-
-    <div>
-    <form action="/" method="GET">
-        <label class="bk">Select input parameters:</label>
-    
-        <table>
-        <tr>
-        <th>
-            <label class="bk">M1 init:</label>
-        </th>
-        <th>
-            <input type="text" id="M1init" name="M1init">
-        </th>
-        </tr>
-        
-        <tr>
-        <th>
-            <label class="bk">q init:</label>
-        </th>
-        <th>
-            <input type="text" id="qinit" name="qinit">
-        </th>
-        </tr>
-        
-        <tr>
-        <th>
-            <label class="bk">P init:</label>
-        </th>
-        <th>
-            <input type="text" id="Pinit" name="Pinit">
-        </th>
-        </tr>
-        
-        <tr>
-        <th>
-            <label class="bk">[F/H] init:</label>
-        </th>
-        <th>
-            <input type="text" id="FeHinit" name="FeHinit">
-        </th>
-        </tr>
-        
-        </table>
-        
-        <button type="submit">Simulate</button>
-        
-    </form>
+        <h1>MESA - bps</h1>
     </div>
     
-    <p>
-    Or upload a csv file with as columns 'M1_init', 'q_init', 'P_init', 'FeH_init'. Limited to 16 Mb and 10000 lines.
-    </p>
+    <div class="form-div-main">
     
-    <form action='/upload/' method=POST enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
+        <div class="form-div">
+        <form action="/" method="GET">
+            <label class="bk">Select input parameters:</label>
+        
+            <table>
+            <tr>
+            <th>
+                <label class="bk">M1 init:</label>
+            </th>
+            <th>
+                <input type="text" id="M1init" name="M1init">
+            </th>
+            </tr>
+            
+            <tr>
+            <th>
+                <label class="bk">q init:</label>
+            </th>
+            <th>
+                <input type="text" id="qinit" name="qinit">
+            </th>
+            </tr>
+            
+            <tr>
+            <th>
+                <label class="bk">P init:</label>
+            </th>
+            <th>
+                <input type="text" id="Pinit" name="Pinit">
+            </th>
+            </tr>
+            
+            <tr>
+            <th>
+                <label class="bk">[F/H] init:</label>
+            </th>
+            <th>
+                <input type="text" id="FeHinit" name="FeHinit">
+            </th>
+            </tr>
+            
+            </table>
+            
+            <button type="submit">Simulate</button>
+            
+        </form>
+        </div>
+        
+        <p></p>
+        
+        <div class="form-div">
+            <p>
+            Or upload a csv file with as columns 'M1_init', 'q_init', 'P_init', 'FeH_init'. Limited to 16 Mb and 10000 lines.
+            </p>
+        
+            <form action='/upload/' method=POST enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value=Upload>
+            </form>
+        </div>
+        
+    </div>
 
     
     <h2>Results</h2>
     
-    {% if results %}
     
-    {{ results | safe }}
+    <div class="form-div-main">
     
-    {% endif %}
+        {% if results %}
+        <div class="result-div">
+        
+            {{ results | safe }}
+        
+        </div>
+        {% else %}
+        <p> No results, run a model first...</p>
+        {% endif %}
+        
+    </div>
 
 </body>
 </html>
