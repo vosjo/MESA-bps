@@ -1,12 +1,12 @@
-
+import os
 import pandas as pd
 
 from nnaps import predictors
 
 
-stability_model = predictors.FCPredictor(saved_model='models/model_stability.h5')
-stable_model = predictors.FCPredictor(saved_model='models/model_stable_systems.h5')
-ce_model = predictors.FCPredictor(saved_model='models/model_ce_systems.h5')
+stability_model = predictors.FCPredictor(saved_model=os.path.join('MESAbps', 'models', 'model_stability.h5'))
+stable_model = predictors.FCPredictor(saved_model=os.path.join('MESAbps', 'models', 'model_stable_systems.h5'))
+ce_model = predictors.FCPredictor(saved_model=os.path.join('MESAbps', 'models', 'model_ce_systems.h5'))
 
 NECESSARY_PARAMETERS = stability_model.features
 
