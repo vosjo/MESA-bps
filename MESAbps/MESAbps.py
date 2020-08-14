@@ -34,7 +34,17 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-       
+def arguments2float(*args):
+
+    results = []
+
+    for arg in args:
+        if arg == '':
+            results.append(None)
+        else:
+            results.append(float(arg))
+
+    return results
 
 @app.route('/upload/', methods=['GET', 'POST'])
 def upload_file():
@@ -102,16 +112,21 @@ def download_and_remove(filename):
 
 @app.route('/')
 def homepage():
-    
+
     M1init = request.args.get('M1init', '')
     M2init = request.args.get('M2init', '')
     qinit = request.args.get('qinit', '')
     Pinit = request.args.get('Pinit', '')
     FeHinit = request.args.get('FeHinit', '')
-    
+
+    M1init, M2init, qinit, Pinit, FeHinit = arguments2float(M1init, M2init, qinit, Pinit, FeHinit)
+
+    if qinit is None and M1init is not None and M2init is not None:
+        qinit = M1init / M2init
+
     render_kws = {}
     
-    if M1init is not '' and qinit is not '' and Pinit is not '' and FeHinit is not '':
+    if M1init is not None and qinit is not None and Pinit is not None and FeHinit is not None:
         df = pd.DataFrame(data=[[M1init, qinit, Pinit, FeHinit]], 
                           columns=['M1_init', 'q_init', 'P_init', 'FeH_init'])
         
