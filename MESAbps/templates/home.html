@@ -36,9 +36,9 @@
     
         <div class="form-div">
         <form action="/" method="GET">
-            <label class="bk">Select input parameters:</label>
+            <label class="bk">Initial system parameters:</label>
         
-            <table>
+            <table align="center">
             <tr>
             <th>
                 <label class="bk">M1 init (Msol):</label>
@@ -85,6 +85,29 @@
             </tr>
             
             </table>
+
+            <label class="bk">Binary interaction parameters:</label>
+
+            <table align="center">
+            <tr>
+            <th>
+                <label class="bk">Stability limit (Mdot max) [0.0 -> -3.0]:</label>
+            </th>
+            <th>
+                <input type="text" id="stability_limit" name="stability_limit">
+            </th>
+            </tr>
+
+            <tr>
+            <th>
+                <label class="bk">Alpha CE [0.0 -> 1.0]:</label>
+            </th>
+            <th>
+                <input type="text" id="alpha_ce" name="alpha_ce">
+            </th>
+            </tr>
+
+            </table>
             
             <button type="submit">Simulate</button>
             
@@ -95,11 +118,38 @@
         
         <div class="form-div">
             <p>
-            Or upload a csv file with as columns 'M1_init', 'q_init', 'P_init', 'FeH_init'. Limited to 16 Mb and 10000 lines.
+            Or upload a csv file with as columns 'M1_init', 'q_init', 'P_init', 'FeH_init', and optionally
+            the interaction parameters. Limited to 16 Mb and 10000 lines.
             </p>
         
             <form action='/upload/' method=POST enctype=multipart/form-data>
+
+
+            <label class="bk">Binary interaction parameters:</label>
+
+            <table align="center">
+            <tr>
+            <th>
+                <label class="bk">Stability limit (Mdot max) [0.0 -> -3.0]:</label>
+            </th>
+            <th>
+                <input type="text" id="stability_limit" name="stability_limit">
+            </th>
+            </tr>
+
+            <tr>
+            <th>
+                <label class="bk">Alpha CE [0.0 -> 1.0]:</label>
+            </th>
+            <th>
+                <input type="text" id="alpha_ce" name="alpha_ce">
+            </th>
+            </tr>
+
+            </table>
+
             <input type=file name=file>
+
             <input type=submit value=Upload>
             </form>
         </div>

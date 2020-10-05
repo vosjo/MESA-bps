@@ -3,25 +3,31 @@ import pandas as pd
 
 from nnaps import predictors
 
-
 stability_model = predictors.FCPredictor(saved_model=os.path.join('MESAbps', 'models', 'model_stability.h5'))
 stable_model = predictors.FCPredictor(saved_model=os.path.join('MESAbps', 'models', 'model_stable_systems.h5'))
 ce_model = predictors.FCPredictor(saved_model=os.path.join('MESAbps', 'models', 'model_ce_systems.h5'))
 
-NECESSARY_PARAMETERS = stability_model.features
+NECESSARY_PARAMETERS = ['M1_init', 'q_init', 'P_init', 'FeH_init']
 
 def correct_input_pars(df):
-    
+
     for parname in NECESSARY_PARAMETERS:
         if not parname in df.columns:
             return False
         
     return True
 
-def predict(dataframe):
-    
+
+def predict(dataframe, stability_limit=-2, alpha_ce=0.3):
+
     df = dataframe.copy()
-    
+
+    # check if stability limit and alpha_ce are in the dataframe, use defaults otherwise
+    if 'stability_limit' not in df.columns:
+        df['stability_limit'] = stability_limit
+    if 'alpha_ce' not in df.columns:
+        df['alpha_ce'] = alpha_ce
+
     # prepare the result DF
     results = dataframe.copy()
     results['stability'] = 'merger'
@@ -29,7 +35,7 @@ def predict(dataframe):
     results['q_final'] = 0
     results['M1_final'] = 0
     results['product'] = 'merger'
-    
+
     # start with predicting the properties at the end of ML and the stability
     #mlend = mlend_model.predict(df)
     stability = stability_model.predict(df)

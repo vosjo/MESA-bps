@@ -81,8 +81,16 @@ def upload_file():
             if not predictions.correct_input_pars(df):
                 flash('File does not contain the correct parameters: {}'.format(predictions.NECESSARY_PARAMETERS) )
                 return redirect(url_for('homepage'))
-            
-            results = predictions.predict(df)
+
+            stability_limit = request.form.get('stability_limit', None)
+            alpha_ce = request.form.get('alpha_ce', None)
+            kwargs = {}
+            if stability_limit is not None:
+                kwargs['stability_limit'] = stability_limit
+            if alpha_ce is not None:
+                kwargs['alpha_ce'] = alpha_ce
+
+            results = predictions.predict(df, **kwargs)
             results.to_csv(app.config['DOWNLOAD_FOLDER'] + '/' + filename)
             
             return redirect(url_for('download_and_remove',
