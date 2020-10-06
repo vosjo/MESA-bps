@@ -12,11 +12,19 @@ NECESSARY_PARAMETERS = ['M1_init', 'q_init', 'P_init', 'FeH_init']
 def correct_input_pars(df):
 
     for parname in NECESSARY_PARAMETERS:
-        if not parname in df.columns:
+        if not parname in df.columns.values:
             return False
         
     return True
 
+def get_missing_input_pars(df):
+
+    missing = []
+    for parname in NECESSARY_PARAMETERS:
+        if parname not in df.columns.values:
+            missing.append(parname)
+
+    return missing
 
 def predict(dataframe, stability_limit=-2, alpha_ce=0.3):
 

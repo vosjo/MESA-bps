@@ -26,7 +26,7 @@ if not os.path.isdir(DOWNLOAD_FOLDER):
 #Connect the app
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = os.urandom(24)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['DOWNLOAD_FOLDER'] = DOWNLOAD_FOLDER
 
@@ -79,7 +79,7 @@ def upload_file():
                 return redirect(url_for('homepage'))
             
             if not predictions.correct_input_pars(df):
-                flash('File does not contain the correct parameters: {}'.format(predictions.NECESSARY_PARAMETERS) )
+                flash('File is missing the following parameters: {}'.format(predictions.get_missing_input_pars(df)) )
                 return redirect(url_for('homepage'))
 
             stability_limit = request.form.get('stability_limit', None)
