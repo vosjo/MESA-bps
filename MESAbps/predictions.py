@@ -34,6 +34,7 @@ def predict(dataframe, stability_limit=-2, alpha_ce=0.3):
     results['P_final'] = 0
     results['q_final'] = 0
     results['M1_final'] = 0
+    results['M2_final'] = 0
     results['product'] = 'merger'
 
     # start with predicting the properties at the end of ML and the stability
@@ -48,13 +49,13 @@ def predict(dataframe, stability_limit=-2, alpha_ce=0.3):
     
     # make predictions for stable systems
     if len(ind_stable) > 0:
-        stable_results = stable_model.predict(df.loc[ind_stable]).values
-        results.loc[ind_stable, ['P_final', 'q_final', 'M1_final', 'product']] = stable_results
+        stable_results = stable_model.predict(df.loc[ind_stable])
+        results.loc[ind_stable, stable_results.columns.values] = stable_results.values
     
     # make predictions for CE systems
     if len(ind_ce) > 0:
-        ce_results = ce_model.predict(df.loc[ind_ce]).values
-        results.loc[ind_ce, ['P_final', 'q_final', 'M1_final', 'product']] = ce_results
+        ce_results = ce_model.predict(df.loc[ind_ce])
+        results.loc[ind_ce, ce_results.columns.values] = ce_results.values
     
     # mergers are ignored as they are not predictable
     
