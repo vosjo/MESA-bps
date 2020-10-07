@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Form-v4 by Colorlib</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/opensans-font.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/line-awesome/css/line-awesome.min.css') }}">
+	<!-- Jquery -->
+	<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body class="form-v4">
+
+    <div class="header">
+    <a>MESA - bps</a>
+    <div class="header-right">
+        <a href="/">Single Model</a>
+        <a href="/population">Upload Population</a>
+        <a href="/about">About</a>
+    </div>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <main>
+	<div class="page-content">
+		<div class="form-v4-content">
+			<div class="form-left">
+                <h2>INFORMATION</h2>
+				<p class="text-1">Upload a csv file with as columns:</p>
+
+                <ul>
+                    <li>'M1_init'</li>
+                    <li>'q_init'</li>
+                    <li>'P_init'</li>
+                    <li>'FeH_init'</li>
+                </ul>
+                <p>Optionally add the interaction parameters in the csv file:</p>
+                <ul>
+                    <li>'stability_limit'</li>
+                    <li>'alpha_ce'</li>
+                </ul>
+                <p>Alternatively set the same interaction parameters for all models using the form input.
+                   Limited to 16 Mb and 10000 lines.</p>
+			</div>
+			<form class="form-detail" action="/upload/" method="POST" id="uploadform" enctype="multipart/form-data">
+				<h2>Upload a population</h2>
+
+				<h3>Population properties</h3>
+
+				<div class="form-row">
+					<label for="file">CSV file with population</label>
+					<input type="file" name="file" id="file" required>
+				</div>
+
+                <h3>Interaction properties</h3>
+
+                <div class="form-row form-row-1 ">
+                    <label for="stability_limit">Stability limit (Mdot max)</label>
+                    <input type="text" name="stability_limit" id="stability_limit" class="input-text">
+                </div>
+                <div class="form-row form-row-1">
+                    <label for="alpha_ce">Alpha CE</label>
+                    <input type="text" name="alpha_ce" id="alpha_ce" class="input-text">
+                </div>
+
+
+				<div class="form-row-last">
+					<input type="submit" name="simulate" class="register" value="Simulate">
+				</div>
+			</form>
+		</div>
+
+	</div>
+	</main>
+
+
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

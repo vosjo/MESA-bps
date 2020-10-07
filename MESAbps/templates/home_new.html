@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Form-v4 by Colorlib</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/opensans-font.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/line-awesome/css/line-awesome.min.css') }}">
+	<!-- Jquery -->
+	<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body class="form-v4">
+
+    <div class="header">
+    <a>MESA - bps</a>
+    <div class="header-right">
+        <a href="/">Single Model</a>
+        <a href="/population">Upload Population</a>
+        <a href="/about">About</a>
+    </div>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <main>
+	<div class="page-content">
+		<div class="form-v4-content">
+			<div class="form-left">
+				<h2>INFORMATION</h2>
+				<p class="text-1">
+                    Here you can run a single binary evolution model based on our Neural Network assisted Population
+                    Synthesis code. For now this is a very basic model focused on interaction on low mass binaries that
+                    interact on the Red Giant Branch. It will predict the mass and orbit of the systems after the
+                    first interaction phase.
+                </p>
+				<p class="text-2">
+                    <span>Limits:</span> The model only supports low mass binaries, with a donor mass up to 2.5 Msol.
+                    The mass ratio can vary between 1 and 20, and the metallicity [Fe/H] can vary between -2 and 0.5
+                    dex. The orbital period should be picked so that there is an interaction on the RGB.
+                    The model  will happily extrapolate outside of these values, but has no validity there.
+                    The stability of RLOF can be set with the stability_limit to values of lg(Mdot_max) = 0 -> -3, and
+                    the alpha parameter for the CE ejection can be varied between 0.1 and 1.0.
+                </p>
+			</div>
+			<form class="form-detail" action="/" method="GET" id="myform">
+				<h2>Single binary model</h2>
+
+				<h3>Binary properties</h3>
+
+				<div class="form-row">
+					<label for="M1init">M1 init (Msol)</label>
+					<input type="text" name="M1init" id="M1init" class="input-text" required>
+				</div>
+				<div class="form-group">
+					<div class="form-row form-row-1">
+						<label for="M2init">M2 init (Msol)</label>
+						<input type="text" name="M2init" id="M2init" class="input-text">
+					</div>
+					<div class="form-row-middle">
+					    <p>Or</p>
+					</div>
+					<div class="form-row form-row-1">
+						<label for="qinit">q init</label>
+						<input type="text" name="qinit" id="qinit" class="input-text">
+					</div>
+				</div>
+                <div class="form-row form-row-1 ">
+                    <label for="Pinit">P init (days)</label>
+                    <input type="text" name="Pinit" id="Pinit" class="input-text" required>
+                </div>
+                <div class="form-row form-row-1">
+                    <label for="FeHinit">[Fe/H] (dex)</label>
+                    <input type="text" name="FeHinit" id="FeHinit" class="input-text" required>
+                </div>
+
+                <h3>Interaction properties</h3>
+
+                <div class="form-row form-row-1 ">
+                    <label for="stability_limit">Stability limit (Mdot max)</label>
+                    <input type="text" name="stability_limit" id="stability_limit" class="input-text">
+                </div>
+                <div class="form-row form-row-1">
+                    <label for="alpha_ce">Alpha CE</label>
+                    <input type="text" name="alpha_ce" id="alpha_ce" class="input-text">
+                </div>
+
+
+				<div class="form-row-last">
+					<input type="submit" name="simulate" class="register" value="Simulate">
+				</div>
+			</form>
+		</div>
+
+        <div class="form-v4-content column">
+
+            <div class="form-top">
+                <h2>Results</h2>
+            </div>
+
+            <div class="form-bottom">
+            {% if results %}
+                {{ results | safe }}
+            {% else %}
+            <p> No results, run a model first...</p>
+            {% endif %}
+            </div>
+        </div>
+
+
+
+	</div>
+	</main>
+
+
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

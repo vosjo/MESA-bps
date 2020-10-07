@@ -117,6 +117,11 @@ def download_and_remove(filename):
     r.headers.set('Content-Disposition', 'attachment', filename='bps_results.csv')
     return r
 
+@app.route('/population')
+def populationpage():
+
+    # Render the page
+    return render_template('population.html')
 
 @app.route('/')
 def homepage():
@@ -140,10 +145,10 @@ def homepage():
         
         results = predictions.predict(df)
         
-        render_kws['results'] = results.to_html()
+        render_kws['results'] = results.to_html(classes=['result-table'], justify='center')
 
     # Render the page
-    return render_template('home.html', **render_kws)
+    return render_template('home_new.html', **render_kws)
 
 
 if __name__ == '__main__':
