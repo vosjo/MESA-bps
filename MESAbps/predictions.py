@@ -59,11 +59,13 @@ def predict(dataframe, stability_limit=-2, alpha_ce=0.3):
     if len(ind_stable) > 0:
         stable_results = stable_model.predict(df.loc[ind_stable])
         results.loc[ind_stable, stable_results.columns.values] = stable_results.values
+        results.loc[ind_stable, 'M2_final'] = results.loc[ind_stable, 'M1_final'] / results.loc[ind_stable, 'q_final']
     
     # make predictions for CE systems
     if len(ind_ce) > 0:
         ce_results = ce_model.predict(df.loc[ind_ce])
         results.loc[ind_ce, ce_results.columns.values] = ce_results.values
+        results.loc[ind_ce, 'M2_final'] = results.loc[ind_ce, 'M1_final'] / results.loc[ind_ce, 'q_final']
     
     # mergers are ignored as they are not predictable
     
